@@ -40,3 +40,74 @@ const siteContent = { // DO NOT CHANGE THIS OBJECT
 };
 
 console.log('project wired!')
+
+
+function arrayify(nodeList) {
+  return Array.from(nodeList)
+}
+
+function objToArray(obj, key) {
+  return Object.entries(obj[key])
+}
+
+function textPusher (nodeList, objArr) {
+  for (let i=0; i<nodeList.length;i++){
+    nodeList[i].textContent= objArr[i][1]
+  }
+}
+
+function classPusher (nodeList, className) {
+  for (let i=0; i<nodeList.length;i++){
+    nodeList[i].className= className
+  }
+}
+
+function attrPusher (nodeList, attr, objArr) {
+  for (let i=0; i<nodeList.length; i++){
+    nodeList[i].setAttribute(attr, objArr[i][1])
+  }
+}
+
+
+
+const header = document.querySelector("header")
+const headerNav = header.querySelector("nav")
+const headerLinks = headerNav.querySelectorAll("a")
+const navArr = objToArray(siteContent, "nav")
+
+textPusher(headerLinks, navArr)
+classPusher(headerLinks, "italic")
+
+const images = document.querySelectorAll("img")
+attrPusher(images, "src", objToArray(siteContent, "images"))
+
+const ctaContent = objToArray(siteContent, "cta")
+const ctaSite = document.querySelector(".cta-text").querySelectorAll("*")
+
+textPusher(ctaSite, ctaContent)
+
+function searchedObjToArray (obj, key, search) {
+  const arr = Object.entries(obj[key])
+  const output = arr.filter(element => element[0].includes(search))
+  return output
+}
+
+
+const h4Content = searchedObjToArray(siteContent, "main-content", "h4")
+const h4Site = document.querySelector(".main-content").querySelectorAll("h4")
+textPusher(h4Site, h4Content)
+
+const pContent = searchedObjToArray(siteContent, "main-content", "content")
+const pSite = document.querySelector(".main-content").querySelectorAll("p")
+textPusher(pSite, pContent)
+
+const contactContent = objToArray(siteContent, "contact")
+const contactSite = document.querySelector(".contact").querySelectorAll("*")
+
+textPusher(contactSite, contactContent)
+
+const footerContent = objToArray(siteContent, "footer")
+const footerSite = document.querySelector("footer").querySelectorAll("*")
+
+textPusher(footerSite, footerContent)
+classPusher(footerSite, "bold")
